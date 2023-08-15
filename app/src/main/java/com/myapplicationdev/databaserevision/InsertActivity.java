@@ -32,9 +32,10 @@ public class InsertActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Create the DBHelper object, passing in the activity's Context
                 DBHelper db = new DBHelper(InsertActivity.this);
+                String content = etContent.getText().toString();
+                int priority = Integer.parseInt(etPriority.getText().toString());
 
-
-                db.insertTask();
+                db.insertTask(content, priority);
                 db.close();
             }
         });
