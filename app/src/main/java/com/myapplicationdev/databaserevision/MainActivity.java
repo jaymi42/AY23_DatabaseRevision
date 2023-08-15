@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, RetrieveActivityTextView.class);
                 startActivity(intent);
 
+
             }
         });
 
