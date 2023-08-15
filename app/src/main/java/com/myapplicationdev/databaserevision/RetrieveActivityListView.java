@@ -34,10 +34,14 @@ public class RetrieveActivityListView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Create the DBHelper object, passing in the activity's Context
+                DBHelper dbh = new DBHelper(RetrieveActivityListView.this);
+
+                al.clear();
+                al.addAll(dbh.getNotesInObjects());
+                aa.notifyDataSetChanged();
 
             }
         });
-
 
         //Option: Implement dialog to edit a record
         //Option: Implement context to delete a record
