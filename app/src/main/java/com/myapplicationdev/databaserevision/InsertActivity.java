@@ -2,6 +2,7 @@ package com.myapplicationdev.databaserevision;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,7 @@ public class InsertActivity extends AppCompatActivity {
 
                 db.insertTask(content, priority);
                 db.close();
+                Toast.makeText(InsertActivity.this, "Object successfully added", Toast.LENGTH_SHORT).show();
             }
         });
 
