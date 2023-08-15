@@ -23,8 +23,9 @@ public class RetrieveActivityListView extends AppCompatActivity {
     ListView lv;
     ArrayAdapter<Note> aa;
     ArrayList<Note> al;
+    ArrayList<Note> al2;
 
-    Note data;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,10 @@ public class RetrieveActivityListView extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int
                     position, long identity) {
 //
+                DBHelper dbh = new DBHelper(RetrieveActivityListView.this);
+                al.clear();
+                al.addAll(dbh.getNotesInObjects());
+                Note data = al.get(position);
 
                 // Inflate the input.xml layout file
                 LayoutInflater inflater =
@@ -76,7 +81,15 @@ public class RetrieveActivityListView extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Extract the text entered by the user
-                        String message = etContent.getText().toString();
+                        String content = etContent.getText().toString();
+                        int priority = Integer.parseInt(etPri.getText().toString());
+                        data.setContent(content);
+                        data.setPriority(String.valueOf(priority));
+                        dbh.updateTask(data);
+                        btnGetNotes.callOnClick();
+
+
+
 
                         // Set the text to the TextView
 //                        tvDemo3.setText(message);
@@ -86,6 +99,7 @@ public class RetrieveActivityListView extends AppCompatActivity {
                 AlertDialog myDialog = myBuilder.create();
                 myDialog.show();
             }
+
         });
 
 
