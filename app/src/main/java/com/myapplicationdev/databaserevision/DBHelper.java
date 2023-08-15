@@ -63,8 +63,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                //data retrieval in String
-                //tasks.add(cursor.getString(0));
+                String content = cursor.getString(1);
+                tasks.add(content);
             } while (cursor.moveToNext());
         }
 
@@ -73,6 +73,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return tasks;
     }
+
 
     public ArrayList<Note> getNotesInObjects() {
         ArrayList<Note> notes = new ArrayList<Note>();
