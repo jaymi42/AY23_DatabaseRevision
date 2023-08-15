@@ -3,7 +3,9 @@ package com.myapplicationdev.databaserevision;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,7 +25,7 @@ public class RetrieveActivityListView extends AppCompatActivity {
     ListView lv;
     ArrayAdapter<Note> aa;
     ArrayList<Note> al;
-    ArrayList<Note> al2;
+    Note data;
 
 
 
@@ -38,6 +40,8 @@ public class RetrieveActivityListView extends AppCompatActivity {
         al = new ArrayList<>();
         aa = new ArrayAdapter<Note>(RetrieveActivityListView.this, android.R.layout.simple_list_item_1, al);
         lv.setAdapter(aa);
+        registerForContextMenu(lv);
+
 
         btnGetNotes.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -52,6 +56,8 @@ public class RetrieveActivityListView extends AppCompatActivity {
             }
         });
 
+
+
         //Option: Implement dialog to edit a record
         //Option: Implement context to delete a record
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,7 +68,7 @@ public class RetrieveActivityListView extends AppCompatActivity {
                 DBHelper dbh = new DBHelper(RetrieveActivityListView.this);
                 al.clear();
                 al.addAll(dbh.getNotesInObjects());
-                Note data = al.get(position);
+                data = al.get(position);
 
                 // Inflate the input.xml layout file
                 LayoutInflater inflater =
@@ -106,4 +112,52 @@ public class RetrieveActivityListView extends AppCompatActivity {
 
 
     }
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.add(0,1,0,"Delete");
+
+
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+
+            if (item.getItemId() == 1) { //check whether the selected menu item ID is 0
+
+               AlertDialog.Builder myBuilder = new AlertDialog.Builder(RetrieveActivityListView.this);
+                myBuilder.setTitle("Danger");
+                myBuilder.setMessage("Are you sure you want to delete the content?");
+
+                myBuilder.setCancelable(false);
+
+
+
+                myBuilder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                myBuilder.setNegativeButton("DELETE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DBHelper dbh = new DBHelper(RetrieveActivityListView.this);
+
+                        dbh.deleteTask(data.getId());
+
+                        finish();
+//
+                    }
+                });
+
+                AlertDialog myDialog = myBuilder.create();
+                myDialog.show();
+
+
+            }
+
+        return true; //menu item successfully handled
+}
 }
