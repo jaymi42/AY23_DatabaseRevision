@@ -52,7 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
 
     }
-
+//jolibee
     public ArrayList<String> getNotesInStrings() {
         ArrayList<String> tasks = new ArrayList<String>();
 
